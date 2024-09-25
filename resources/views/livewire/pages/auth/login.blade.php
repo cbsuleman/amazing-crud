@@ -20,7 +20,14 @@ new #[Layout('layouts.guest')] class extends Component
 
         Session::regenerate();
 
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        $loggedInUserRole = request()->user()->role;
+//            $this->redirect('/', navigate: true);
+        if ($loggedInUserRole == 'User') {
+            $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        } elseif ($loggedInUserRole == 'Admin') {
+            $this->redirectIntended(default: route('admin.dashboard', absolute: false), navigate: true);
+        }
+//        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
     }
 }; ?>
 
